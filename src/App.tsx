@@ -1,4 +1,4 @@
 const App = () => {
-  return <div>Dev Pulse</div>;
+  return <div className="text-red-800">Dev Pulse</div>;
 };
 export default App;
