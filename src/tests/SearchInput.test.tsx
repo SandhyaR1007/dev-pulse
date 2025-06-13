@@ -39,4 +39,10 @@ describe('SearchInput', () => {
       expect(screen.getByText(/sandhya rajwanshi/i)).toBeInTheDocument();
     });
   });
+
+  it('shows loading text', () => {
+    fireEvent.change(inputElement, { target: { value: 'sandhya' } });
+    fireEvent.click(searchBtn);
+    expect(screen.getByText(/loading.../i)).toBeInTheDocument();
+  });
 });
