@@ -45,4 +45,15 @@ describe('SearchInput', () => {
     fireEvent.click(searchBtn);
     expect(screen.getByText(/loading.../i)).toBeInTheDocument();
   });
+  it('shows error on wrong username', async () => {
+    typedFetch.mockRejectedValueOnce({
+      ok: false,
+    });
+    fireEvent.change(inputElement, { target: { value: 'invalid_user' } });
+    fireEvent.click(searchBtn);
+
+    await waitFor(() => {
+      expect(screen.getByText(/no user found/i)).toBeInTheDocument();
+    });
+  });
 });

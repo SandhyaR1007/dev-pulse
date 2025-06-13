@@ -10,6 +10,7 @@ const useGithubProfile = () => {
   const handleSearch = async (username: string) => {
     if (!username.trim()) return;
     setLoading(true);
+    setError(null);
     try {
       const response = await fetchUserDetails(username);
       if (response) {

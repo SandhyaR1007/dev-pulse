@@ -6,7 +6,10 @@ type ProfileCardProps = {
 const ProfileCard = ({ userProfile }: ProfileCardProps) => {
   return (
     <div>
-      <div>Name: {userProfile?.name}</div>
+      <div>
+        Name:{' '}
+        <span className="font-bold text-purple-800">{userProfile?.name}</span>
+      </div>
     </div>
   );
 };
