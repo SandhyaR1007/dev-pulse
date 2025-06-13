@@ -1,27 +1,11 @@
 import { useState } from 'react';
-import type { GithubUser } from '../types/github';
-import { fetchUserDetails } from '../api/github';
 import ProfileCard from './ProfileCard';
+import useGithubProfile from '../hooks/useGithubProfile';
 
 const SearchInput: React.FC = () => {
   const [username, setUsername] = useState<string>('');
-  const [userProfile, setUserProfile] = useState<GithubUser | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { loading, error, userProfile, handleSearch } = useGithubProfile();
 
-  const handleSearch = async () => {
-    if (!username.length) return;
-    setLoading(true);
-    try {
-      const response = await fetchUserDetails(username);
-      if (response) {
-        setUserProfile(response);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <div>
       <div className="flex gap-5 p-3">
@@ -37,16 +21,14 @@ const SearchInput: React.FC = () => {
 
         <button
           className="bg-purple-600 text-white text-md px-5 py-1 rounded-sm"
-          onClick={handleSearch}
+          onClick={() => handleSearch(username)}
         >
           Search
         </button>
       </div>
-      {loading ? (
-        <h4>Loading...</h4>
-      ) : (
-        <ProfileCard userProfile={userProfile} />
-      )}
+      {loading && <h3>Loading...</h3>}
+      {error && <h3 className="text-red-600">{error}</h3>}
+      {userProfile && <ProfileCard userProfile={userProfile} />}
     </div>
   );
 };
