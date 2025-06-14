@@ -7,20 +7,21 @@ const SearchInput: React.FC = () => {
   const { loading, error, userProfile, handleSearch } = useGithubProfile();
 
   return (
-    <div>
-      <div className="flex gap-5 p-3">
-        <label htmlFor="search">Search</label>
-        <input
-          id="search"
-          className="p-1 w-100 border-2 border-slate-300 rounded-xl outline-0"
-          placeholder="Search a username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    <div className="flex flex-col items-center">
+      <div className="flex gap-5 p-3 flex-col">
+        <label htmlFor="search">
+          <input
+            id="search"
+            className="p-2 w-100 shadow-sm rounded-md outline-0"
+            placeholder="Search a username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
 
         <button
-          className="bg-purple-600 text-white text-md px-5 py-1 rounded-sm"
+          className="bg-purple-600 text-white text-md px-5 py-1 rounded-sm w-fit self-center"
           onClick={() => handleSearch(username)}
         >
           Search
