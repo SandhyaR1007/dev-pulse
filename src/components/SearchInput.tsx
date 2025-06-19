@@ -12,6 +12,7 @@ const SearchInput: React.FC = () => {
         <label htmlFor="search">Search</label>
         <input
           id="search"
+          aria-label="search"
           className="p-2 w-100 shadow-sm rounded-md outline-0"
           placeholder="Search a username"
           type="text"

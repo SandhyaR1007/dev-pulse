@@ -4,10 +4,10 @@ export interface GithubUser {
   avatar_url: string;
   html_url: string;
   name: string;
-  company: string | null;
-  location: string | null;
-  bio: string | null;
-  public_repos: number;
-  followers: number;
-  following: number;
+  company?: string | null;
+  location?: string | null;
+  bio?: string | null;
+  public_repos?: number;
+  followers?: number;
+  following?: number;
 }
