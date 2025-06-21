@@ -22,26 +22,26 @@ describe('SearchInput', () => {
     typedFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({
-        login: 'sandhya',
-        name: 'Sandhya Rajwanshi',
+        login: 'kenshi',
+        name: 'Kenshi Sama',
         avatar_url: 'https://...',
-        location: 'India',
-        html_url: 'https://github.com/sandhya',
+        location: 'Japan',
+        html_url: 'https://github.com/kenshi',
       }),
     });
 
     fireEvent.change(inputElement, {
-      target: { value: 'sandhya' },
+      target: { value: 'kenshi' },
     });
     fireEvent.click(searchBtn);
 
     await waitFor(() => {
-      expect(screen.getByText(/sandhya rajwanshi/i)).toBeInTheDocument();
+      expect(screen.getByText(/kenshi sama/i)).toBeInTheDocument();
     });
   });
 
   it('shows loading text', () => {
-    fireEvent.change(inputElement, { target: { value: 'sandhya' } });
+    fireEvent.change(inputElement, { target: { value: 'kenshi' } });
     fireEvent.click(searchBtn);
     expect(screen.getByText(/loading.../i)).toBeInTheDocument();
   });

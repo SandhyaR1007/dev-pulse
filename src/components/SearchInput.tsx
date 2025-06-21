@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import ProfileCard from './ProfileCard';
 import useGithubProfile from '../hooks/useGithubProfile';
+import ProfileList from './ProfileList';
 
 const SearchInput: React.FC = () => {
   const [username, setUsername] = useState<string>('');
-  const { loading, error, userProfile, handleSearch } = useGithubProfile();
+  const { loading, error, userProfile, handleSearch, clearCurrentUserProfile } =
+    useGithubProfile();
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length === 0) {
+      clearCurrentUserProfile();
+    }
+    setUsername(e.target.value);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -17,7 +25,7 @@ const SearchInput: React.FC = () => {
           placeholder="Search a username"
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={handleChange}
         />
 
         <button
@@ -29,7 +37,11 @@ const SearchInput: React.FC = () => {
       </div>
       {loading && <h3>Loading...</h3>}
       {error && <h3 className="text-red-600">{error}</h3>}
-      {userProfile && <ProfileCard userProfile={userProfile} />}
+      {userProfile ? (
+        <ProfileCard userProfile={userProfile} />
+      ) : (
+        <ProfileList />
+      )}
     </div>
   );
 };
