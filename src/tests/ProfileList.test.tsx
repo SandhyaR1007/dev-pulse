@@ -1,25 +1,26 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useGithubStore } from '../store/githubStore';
 import ProfileList from '../components/ProfileList';
+import { mockProfiles } from '../utils/constants';
 describe('ProfileList', () => {
-  beforeEach(() => {
+  it('displays search history of users', () => {
     useGithubStore.setState({
-      profiles: [
-        {
-          id: 1,
-          login: 'kenshi',
-          name: 'Kenshi Sama',
-          avatar_url: 'https://...',
-          location: 'Japan',
-          html_url: 'https://github.com/kenshi',
-        },
-      ],
+      profiles: [mockProfiles[0]],
     });
     render(<ProfileList />);
-  });
-  it('displays search history of users', () => {
     expect(screen.getByText(/search history/i)).toBeInTheDocument();
-    expect(screen.getByText(/kenshi sama/i)).toBeInTheDocument();
+    expect(screen.getByText(/alice akira/i)).toBeInTheDocument();
+  });
+
+  it('paginates profiles correctly', () => {
+    useGithubStore.setState({
+      profiles: mockProfiles,
+      page: 1,
+    });
+    render(<ProfileList />);
+    expect(screen.getAllByRole('region')).toHaveLength(2);
+    fireEvent.click(screen.getByText(/load more/i));
+    expect(screen.getAllByRole('region')).toHaveLength(4);
   });
 });
